@@ -50,6 +50,12 @@ A<sub>N,1</sub> A<sub>N,2</sub>...  A<sub>N,N</sub>
 ## スコア
 [残った土壌マスの数 - かかった総駆除コスト] がスコアとなります。
 
+## テストケースジェネレータ
+乱数のシードとテストケースとなるinputファイルの名称を指定して下さい。Java8が必要です。
+```sh
+$ java -jar generator.jar -seed <seed> -file <fileName>
+```
+
 ## サンプル画像
   
 ![1.png](image/1.png)
