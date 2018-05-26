@@ -36,6 +36,8 @@ A<sub>1,1</sub> A<sub>1,2</sub> ... A<sub>1,N</sub>
 A<sub>2,1</sub> A<sub>2,2</sub> ... A<sub>2,N</sub>  
 :  
 A<sub>N,1</sub> A<sub>N,2</sub>...  A<sub>N,N</sub>  
+  
+- 入力 A<sub>y,x</sub> はマス (x,y) の初期状態を表し、.が土壌、#が畑、Wがあなたの現在地を表します
 
 ### 出力
 毎ターンの移動を 900 行で出力して下さい。各移動は、下記のコマンドの通りです。
