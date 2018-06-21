@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Othello</title>
+<link rel="stylesheet" type="text/css" href="css/board.css">
+</head>
+<body>
+	<script type="text/javascript" src="js/othello.js"></script>
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+	<div style="display: none">
+		<div id="none" class="square">
+			<img class="block" src="img/none.png"></img>
+		</div>
+		<div id="black" class="square">
+			<img class="block" src="img/black.png"></img>
+		</div>
+		<div id="white" class="square">
+			<img class="block" src="img/white.png"></img>
+		</div>
+	</div>
+
+	<div id="base">
+		<div id="board"></div>
+		<p id=power>power</p>
+		<canvas id="cv">
+		</canvas>
+		<form name="form1" class="button" action="">
+			<p>
+				<input id="startSturdy" type="button" value="自己学習をはじめる"
+					onclick="StartSturdy();" />
+				<input id="playBlack" type="button" value="黒で学習"
+					onclick="play(1);" />
+				<input id="playWhite" type="button" value="白で学習"
+					onclick="play(2);" />
+			</p>
+			<div id="loadSelf">
+				学習結果ロード：<input type="file" id="load" onchange="loadSelf(this.files)">
+			</div>
+			<div id="loadVS">
+				練習（学習有）：<input type="file" id="opt" onchange="loadVS(this.files)">
+			</div>
+			<div id="loadVSonly">
+				対戦（学習無）：<input type="file" id="vs" onchange="loadVSonly(this.files)">
+			</div>
+			<p>
+				<input id="step" type="hidden" value="学習を止める"
+					onclick="StopSturdy();" />
+			</p>
+			<div id="victory" style="display:none;">勝率：0.0%</div>
+			<p>
+				<input id="winBlack" type="hidden" value="黒の勝利" onclick="OnClickButton(1);" /> <input
+					id="winWhite" type="hidden" value="白の勝利" onclick="OnClickButton(0);" />
+					<input id="draw" type="hidden" value="引分" onclick="OnClickButton(0.5);" />
+			</p>
+		</form>
+	</div>
+	<br/>
+	<table class="resultTable">
+		<tr>
+			<td class="row"><img class="result" src='img/black.png'></img></td>
+			<td class="row"><p id="msgBlack" class="message"></p></td>
+			<td class="row"></td>
+			<td class="row"><img class="result" src="img/white.png"></img></td>
+			<td class="row"><p id="msgWhite" class="message"></p></td>
+			<td class="row"></td>
+			<td><a download="study_result.txt" id="download" target="_blank">学習結果出力</a></td>
+		</tr>
+	</table>
+</body>
+</html>
