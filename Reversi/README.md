@@ -1,6 +1,6 @@
 # Reversi
 
-![1.png](WebContent/img/othello_img.png)
+![1.png](WebContent/img/reversi_img.png)
 
 ## 概要
 強化学習チックな振る舞いを体感することを目的としたリバーシゲームです。  
