@@ -22,6 +22,8 @@ var SLEEP_KIND = {
 	'TURNOVER' : 1000,
 };
 
+var sleepTime = 30;
+
 var root;
 var optRoot;
 var bandit;
@@ -89,7 +91,9 @@ var turnOverStraight = function(x, y, dx, dy, _board, _player_color) {
 };
 
 var turnOverBlock = function(x, y, flip, _board, _player_color) {
-
+	if(end){
+		return;
+	}
 	var total = 0;
 
 	// can not put block
@@ -214,7 +218,7 @@ var showProgress = function() {
 		c.clearRect(0, 0, 300, 200);
 		c.fillStyle = 'rgb(0, 0, 0)';
 		var _w = 0.5;
-		if (nowNode) {
+		if (nowNode && !stop) {
 			_w = nowNode.wins / nowNode.visits;
 		}
 
@@ -225,6 +229,20 @@ var showProgress = function() {
 	}
 };
 
+var effectDamage = function(win) {
+	if(!modeVS){
+		return;
+	}
+	if(BLOCK_KIND.WHITE - optColor != win){
+		$('#myEff').removeClass('damage');
+		$('#myEff')[0].offsetWidth = $('#opEff')[0].offsetWidth;
+		$('#myEff').addClass('damage');
+	}else{
+		$('#opEff').removeClass('damage');
+		$('#opEff')[0].offsetWidth = $('#opEff')[0].offsetWidth;
+		$('#opEff').addClass('damage');
+	}
+}
 var changePlayer = function(_board, _player_color) {
 
 	var pass = false;
@@ -254,10 +272,13 @@ var changePlayer = function(_board, _player_color) {
 						OnClickButton(0.5);
 					} else if (black > white) {
 						OnClickButton(1);
+						effectDamage(1);
 					} else {
 						OnClickButton(0);
+						effectDamage(0);
 					}
 				}
+				
 			}
 		} else if (player_color == BLOCK_KIND.WHITE) {
 			rec = rec + "--";
@@ -281,8 +302,10 @@ var changePlayer = function(_board, _player_color) {
 						OnClickButton(0.5);
 					} else if (black > white) {
 						OnClickButton(1);
+						effectDamage(1);
 					} else {
 						OnClickButton(0);
+						effectDamage(0);
 					}
 				}
 			}
@@ -485,7 +508,7 @@ var initTree = function() {
 };
 
 var optNextStep = function() {
-	if (end) {
+	if (end || stop) {
 		return;
 	}
 	var best = optNowNode.childNodes[0];
@@ -624,8 +647,15 @@ var OnClickButton = function(win) {
 		if(BLOCK_KIND.WHITE - optColor != win){
 			vsWin = vsWin + 1;
 		}
-		document.getElementById('victory').innerText = "èüó¶ÅF" + ((100*vsWin/vsTotal).toFixed(1)) + "%";
+		document.getElementById('victory').innerText = "ÂãùÁéáÔºö" + ((100*vsWin/vsTotal).toFixed(1)) + "%";
 		optColor = BLOCK_KIND.MAX - optColor;
+		if(optColor == BLOCK_KIND.BLACK){
+    		document.getElementById("myColor").className = "white";
+    		document.getElementById("opColor").className = "black";
+		}else{
+    		document.getElementById("myColor").className = "black";
+    		document.getElementById("opColor").className = "white";
+		}
 	}
 };
 var optOnClickButton = function(win) {
@@ -649,35 +679,35 @@ var playMode = function() {
 	});
 };
 
-var menueMode = function() {
-	$('#startSturdy').removeAttr('type');
-	$('#playBlack').removeAttr('type');
-	$('#playWhite').removeAttr('type');
-	// document.getElementById("loadSelf").style.display="";
-	document.getElementById("loadVS").style.display="";
-	document.getElementById("loadVSonly").style.display="";
-	document.getElementById("loadSelf").style.display="";
+var hideMenu = function(){
 	$('#startSturdy').attr({
-		type : 'button'
+		type : 'hidden'
+	});
+	$('#teach').attr({
+		type : 'hidden'
+	});
+	$('#battle').attr({
+		type : 'hidden'
+	});
+	$('#battleVS').attr({
+		type : 'hidden'
 	});
 	$('#playBlack').attr({
-		type : 'button'
+		type : 'hidden'
 	});
 	$('#playWhite').attr({
-		type : 'button'
-	});
-	$('#step').attr({
 		type : 'hidden'
 	});
-	$('#winBlack').attr({
-		type : 'hidden'
-	});
-	$('#winWhite').attr({
-		type : 'hidden'
-	});
-	$('#draw').attr({
-		type : 'hidden'
-	});
+	$('#battleLearningLabel').hide();
+	$('#battleOnlyLabel').hide();
+}
+
+var menueMode = function() {
+	$('#startSturdy').removeAttr('type');
+	$('#teach').removeAttr('type');
+	$('#battle').removeAttr('type');
+	$('#battleAIID').removeAttr('type');
+	displayMenu();
 };
 var play = function(_player) {
 	bandit = true;
@@ -690,29 +720,30 @@ var play = function(_player) {
 	showBoard();
 	stop = false;
 	player = _player;
+	if(player == BLOCK_KIND.BLACK){
+		document.getElementById("myColor").className = "white";
+		document.getElementById("opColor").className = "black";
+	}else{
+		document.getElementById("myColor").className = "black";
+		document.getElementById("opColor").className = "white";
+	}
 	selfSturdy();
 };
 
 var playModeInit = function() {
-	$('#startSturdy').attr({
-		type : 'hidden'
-	});
-	$('#playBlack').attr({
-		type : 'hidden'
-	});
-	$('#playWhite').attr({
-		type : 'hidden'
-	});
-	// document.getElementById("loadSelf").style.display="none";
-	document.getElementById("loadVS").style.display="none";
-	document.getElementById("loadVSonly").style.display="none";
-	document.getElementById("loadSelf").style.display="none";
-	$('#step').removeAttr('type');
-	$('#step').attr({
+	hideMenu();
+	end = false;
+	document.getElementById("eff").className = "bomb";
+	$('#stop').removeAttr('type');
+	$('#stop').attr({
 		type : 'button'
 	});
 }
 var StartSturdy = function() {
+	$('#sturding').attr({
+		type : 'button'
+	});
+	document.getElementById("opMonster").className = "m1";
 	bandit = true;
 	playModeInit();
 	if (!root) {
@@ -727,6 +758,7 @@ var StartSturdy = function() {
 };
 
 var loadVSonly = function (file) {
+	document.getElementById("opMonster").className = "m2";
 	var oreader = new FileReader();
 	oreader.readAsText(file[0]);
 	if (!root) {
@@ -777,7 +809,18 @@ var loadVSonly = function (file) {
 	}
 };
 
+window.addEventListener('DOMContentLoaded', function() {
+	document.getElementById('loadButton').addEventListener('click', clearFile);
+	document.getElementById('battleLearning').addEventListener('click', clearFile);
+	document.getElementById('battleOnly').addEventListener('click', clearFile);
+});
+
+var clearFile = function(){
+	this.value = null;
+}
+
 var loadVS = function (file) {
+	document.getElementById("opMonster").className = "m2";
 	var oreader = new FileReader();
 	oreader.readAsText(file[0]);
 	if (!root) {
@@ -826,6 +869,60 @@ var loadVS = function (file) {
 	}
 };
 
+var loadVS2 = function (data) {
+	$('#battleYellow').attr({
+		type : 'hidden'
+	});
+	$('#battleBlue').attr({
+		type : 'hidden'
+	});
+	$('#battleRed').attr({
+		type : 'hidden'
+	});
+	if (!root) {
+		initTree();
+	}
+	optRoot = new Node(board, null, null, player_color);
+	optRoot.expandChild();
+	initBoard();
+	const optDatalist = data.split(",");
+	for (var i = 0; i < optDatalist.length; i++) {
+		var tmp = optDatalist[i];
+		var _rec = tmp.split('_')[0];
+		var aStep = _rec.split("");
+		for (var j = 0; j < aStep.length; j=j+2) {
+			var _x = aStep[j];
+			var _y = aStep[j+1];
+			var _next = false;
+			for (var cn = 0; cn < optNowNode.childNodes.length; cn++) {
+				var child = optNowNode.childNodes[cn];
+				if (child.move == "" + _x + _y) {
+					optNowNode = child;
+					if (child.childNodes == null) {
+						optNowNode.expandChild();
+					}
+					_next = true;
+					break;
+				}
+			}
+			if(!_next){
+				console.log("Error!!")
+				return;
+			}
+		}
+		optOnClickButton(Number(tmp.split('_')[1]));
+	}
+	playModeInit();
+	document.getElementById("victory").style.display="";
+	vsTotal = 0;
+	vsWin = 0;
+	stop = false;
+	player = 0;
+	optColor = 2;// player black first
+	modeVS = true;
+	selfSturdy();
+};
+
 var loadSelf = function (file) {
 	var reader = new FileReader();
 	reader.readAsText(file[0]);
@@ -863,60 +960,145 @@ var loadSelf = function (file) {
 		}
 	}
 };
+
 var selfSturdy = function() {
 	if(modeVS){
 		if(player_color == optColor) {
 			optNextStep();
-			setTimeout(selfSturdy, 10);
+			setTimeout(selfSturdy, sleepTime);
 		}else{
 			nextStep();
-			setTimeout(selfSturdy, 10);
+			setTimeout(selfSturdy, sleepTime);
 		}
 	}else if (stop || player_color == player) {
 	} else {
 		nextStep();
-		setTimeout(selfSturdy, 10);
+		setTimeout(selfSturdy, sleepTime);
 	}
 };
+
+var displayMenu = function() {
+	$('#startSturdy').attr({
+		type : 'button'
+	});
+	$('#sturding').attr({
+		type : 'hidden'
+	});
+	$('#teach').attr({
+		type : 'button'
+	});
+	$('#battle').attr({
+		type : 'button'
+	});
+	$('#battleVS').attr({
+		type : 'button'
+	});
+	$('#playBlack').attr({
+		type : 'hidden'
+	});
+	$('#playWhite').attr({
+		type : 'hidden'
+	});
+	$('#winBlack').attr({
+		type : 'hidden'
+	});
+	$('#draw').attr({
+		type : 'hidden'
+	});
+	$('#winWhite').attr({
+		type : 'hidden'
+	});
+	$('#stop').attr({
+		type : 'hidden'
+	});
+	$('#battleYellow').attr({
+		type : 'hidden'
+	});
+	$('#battleBlue').attr({
+		type : 'hidden'
+	});
+	$('#battleRed').attr({
+		type : 'hidden'
+	});
+	$('#battleLearningLabel').hide();
+	$('#battleOnlyLabel').hide();
+}
+
 var StopSturdy = function() {
+	document.getElementById("opMonster").className = "";
+	document.getElementById("eff").className = "noBomb";
 	if (player > 0) {
 		menueMode();
 	} else {
 		$('#startSturdy').removeAttr('type');
-		$('#playBlack').removeAttr('type');
-		$('#playWhite').removeAttr('type');
-		// document.getElementById("loadSelf").style.display="";
-		document.getElementById("loadVS").style.display="";
-		document.getElementById("loadVSonly").style.display="";
-		document.getElementById("loadSelf").style.display="";
-		$('#startSturdy').attr({
-			type : 'button'
-		});
-		$('#playBlack').attr({
-			type : 'button'
-		});
-		$('#playWhite').attr({
-			type : 'button'
-		});
-		$('#step').attr({
-			type : 'hidden'
-		});
+		$('#teach').removeAttr('type');
+		$('#battle').removeAttr('type');
+		$('#battleAIID').removeAttr('type');
+		displayMenu();
 	}
 	document.getElementById("victory").style.display="none";
+	document.getElementById("myColor").className = "black";
+	document.getElementById("opColor").className = "white";
 	player = 0;
 	initBoard();
 	showBoard();
 	stop = true;
+	end = true;
 	modeVS = false;
 	noSturdy = false;
-	var area = document.getElementById('loadVS');
-	var temp = area.innerHTML;
-	area.innerHTML = temp;
-	area = document.getElementById('loadVSonly');
-	temp = area.innerHTML;
-	area.innerHTML = temp;
-	area = document.getElementById('loadSelf');
-	temp = area.innerHTML;
-	area.innerHTML = temp;
-	document.getElementById('victory').innerText = "èüó¶ÅF0.0%";
+	showProgress();
+	document.getElementById('victory').innerText = "ÂãùÁéáÔºö0.0%";
 };
+
+var teachF = function() {
+	playModeInit();
+	document.getElementById("opMonster").className = "teacher";
+	document.getElementById("eff").className = "noBomb";
+	$('#playBlack').attr({
+		type : 'button'
+	});
+	$('#playWhite').attr({
+		type : 'button'
+	});
+};
+
+var battleF = function() {
+	playModeInit();
+	document.getElementById("eff").className = "noBomb";
+	$('#battleYellow').attr({
+		type : 'button'
+	});
+	$('#battleBlue').attr({
+		type : 'button'
+	});
+	$('#battleRed').attr({
+		type : 'button'
+	});
+};
+
+var battleYellowF = function() {
+	document.getElementById("opMonster").className = "op1";
+	loadVS2(MONSTER_DATA.YELLOW);
+};
+
+var battleBlueF = function() {
+	document.getElementById("opMonster").className = "op2";
+	loadVS2(MONSTER_DATA.BLUE);
+};
+
+var battleRedF = function() {
+	document.getElementById("opMonster").className = "op3";
+	loadVS2(MONSTER_DATA.RED);
+};
+
+var battleVSF = function () {
+	playModeInit();
+	document.getElementById("eff").className = "noBomb";
+	$('#battleLearningLabel').show();
+	$('#battleOnlyLabel').show();
+};
+
+// monster data
+var el = document.createElement("script");
+el.src = "js/data.js";
+document.body.appendChild(el);

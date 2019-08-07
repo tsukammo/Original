@@ -1,42 +1,137 @@
 #base {
 	width: 400px;
 	height: 180px;
-	padding: 20px 10px 5px 30px;
+	padding: 40px 10px 5px 30px;
 }
 
 #cv {
-	position: relative;
+	position: absolute;
 	width: 200px;
 	height: 20px;
 	background-color: #FFF;
 	border: 1px solid black;
 	top: 0px;
 	margin-bottom: 10px;
-	left: 200px;
+	left: 50px;
 }
 
 #power {
 	position: relative;
 	width: 200px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	left: 200px;
+	left: 50px;
 }
 
 #board {
-	position: relative;
-	float: left;
+	position: absolute;
+	top: 0;
+	left: 60px;
+}
+
+.buttonForm {
+	position: absolute;
+	top: 280px;
+	left: 22px;
+}
+.buttonForm2 {
+	position: absolute;
+	top: 280px;
+	left: 50px;
 }
 
 .button {
-	position: relative;
-	top: 0px;
-	left: 200px;
+	border: none;
+	color: #fff;
+	text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+	text-align: center;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#startSturdy {
+	width: 80px;
+	height: 30px;
+	background-color: #000080;
+}
+#teach {
+	width: 80px;
+	height: 30px;
+	background-color: #008000;
+}
+#battle {
+	width: 80px;
+	height: 30px;
+	background-color: #800000;
+}
+#battleVS {
+	width: 80px;
+	height: 30px;
+	background-color: #808000;
+}
+#sturding {
+	width: 150px;
+	height: 30px;
+	background-color: #B0C4DE;
+}
+#playBlack {
+	width: 90px;
+	height: 30px;
+	background-color: #000000;
+}
+#playWhite {
+	color: #000;
+	width: 90px;
+	height: 30px;
+	border: solid 1px #000;
+	background-color: #EEEEEE;
+}
+#stop {
+	position: absolute;
+	top: 60px;	
+	width: 80px;
+	height: 30px;
+	background-color: #808080;
+}
+#winWhite {
+	color: #000;
+	width: 86px;
+	height: 30px;
+	border: solid 2px #FF0000;
+	background-color: #EEEEEE;
+}
+#winBlack {
+	width: 86px;
+	height: 30px;
+	border: solid 2px #FF0000;
+	background-color: #000000;
+}
+#draw {
+	width: 90px;
+	height: 30px;
+	background-color: #C0C0C0;
 }
 
 .message {
 	position: relative;
 	text-align: left;
+	display: none;
+}
+#battleYellow {
+	width: 90px;
+	height: 30px;
+	background-color: #FFA500;
+}
+#battleBlue {
+	width: 90px;
+	height: 30px;
+	background-color: #0000FF;
+}
+#battleRed {
+	width: 90px;
+	height: 30px;
+	background-color: #FF0000;
 }
 
 #msgBlack {
@@ -51,11 +146,42 @@
 	padding: 0px 0px 0px 50px;
 }
 
+.mainArea {
+	position: relative;
+	width: 300px;
+	height: 200px;
+}
+
+.subArea {
+	position: relative;
+	width: 300px;
+}
+
+.whole {
+	width: 300px;
+	height: 180px;
+	position: relative;
+}
+
 .row {
+	position: relative;
 	width: 20px;
 }
 
-.result {
+.boad {
+	width: 240px;
+	padding: 100px;
+	top: 0;
+}
+
+#myColor {
+	display: block;
+	width: 31px;
+	height: 31px;
+	background-color: #000000;
+}
+
+#opColor {
 	display: block;
 	width: 31px;
 	height: 31px;
@@ -67,6 +193,7 @@
 	width: 33px;
 	height: 33px;
 	background-color: #000000;
+	z-index: 1;
 }
 
 .block {
@@ -76,4 +203,199 @@
 	left: 1px;
 	width: 31px;
 	height: 31px;
+}
+
+#myMonster {
+	position: absolute;
+	bottom: 120px;
+	margin-bottom: 10px;
+}
+#myEff {
+	position: absolute;
+	top: 0px;
+	left: -34px;
+}
+
+#opMonster {
+	position: absolute;
+	bottom: 120px;
+	margin-bottom: 10px;
+}
+#opEff {
+	position: absolute;
+	top: 0px;
+	left: -10px;
+}
+
+#eff {
+	position: absolute;
+	top: -37px;
+	right: 99px;
+}
+
+#downloadButton {
+	background-color: #fff;
+    font-weight: bold;
+	position: absolute;
+	top: 5px;
+	left: 20px;
+	width: 80px;
+	height: 20px;
+	border: 1px solid black;
+	color: #000;
+	text-align: center;
+    font-size: 0.8em;
+	text-align: center;
+}
+#loadButtonLabel {
+	background-color: #fff;
+    font-weight: bold;
+	position: absolute;
+	top: 5px;
+	left: 270px;
+	width: 80px;
+	height: 18px;
+	border: 1px solid black;
+	color: #000;
+	text-align: center;
+    font-size: 0.8em;
+	text-align: center;
+}
+label input {
+     display: none;
+}
+
+/*素材提供元「モンスター集会所！」URL：http://monstermeetingplace.web.fc2.com/*/
+.m1 {
+  height: 32px;
+  width: 32px;
+  animation: move32 1s steps(8) 0s infinite;
+  background-image: url("../img/cara1.png");
+}
+@keyframes move32 {
+    0% { background-position: 0px 0px; }
+  100% { background-position: -256px 0px; }
+}
+.m2 {
+  height: 32px;
+  width: 32px;
+  animation: move32 1s steps(8) 0s infinite;
+  background-image: url("../img/cara2.png");
+}
+.op1 {
+  height: 40px;
+  width: 40px;
+  animation: move40 1s steps(8) 0s infinite;
+  background-image: url("../img/op1.png");
+}
+@keyframes move40 {
+    0% { background-position: 0px 0px; }
+  100% { background-position: -320px 0px; }
+}
+.op2 {
+  height: 72px;
+  width: 72px;
+  animation: move72 1s steps(8) 0s infinite;
+  background-image: url("../img/op2.png");
+}
+@keyframes move72 {
+    0% { background-position: 0px 0px; }
+  100% { background-position: -576px 0px; }
+}
+.op3 {
+  height: 96px;
+  width: 96px;
+  animation: move96m 1s steps(8) 0s infinite;
+  background-image: url("../img/op3.png");
+}
+@keyframes move96m {
+    0% { background-position: 0px 0px; }
+  100% { background-position: -768px 0px; }
+}
+
+.teacher {
+  height: 64px;
+  width: 64px;
+  background-image: url("../img/teacher.png");
+}
+.bomb {
+  height: 96px;
+  width: 96px;
+  animation: move96 1s steps(4) 0s infinite;
+  background-image: url("../img/eff_bomb.png");
+}
+@keyframes move96 {
+    0% { background-position: 0px 0px; }
+  100% { background-position: -384px 0px; }
+}
+.noBomb {
+  height: 96px;
+  width: 96px;
+  animation: move96 1s steps(4) 0s infinite;
+  background-image: url("../img/no_bomb.png");
+}
+
+.damage {
+  height: 96px;
+  width: 96px;
+  animation: move96_5 0.5s steps(7) 0s running;
+  background-image: url("../img/eff_damage.png");
+}
+@keyframes move96_5 {
+    0% { background-position: 0px 0px; }
+  100% { background-position: -672px 0px; }
+}
+.black {
+  height: 32px;
+  width: 32px;
+  background-image: url("../img/black.png");
+}
+.white {
+  height: 32px;
+  width: 32px;
+  background-image: url("../img/white.png");
+}
+#battleLearningLabel {
+	display:none;position: absolute;
+	top: 5px;
+	left: -5px;
+	width: 90px;
+	height: 30px;
+	background-color: #808000;
+	float:right;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	border: none;
+	color: #fff;
+	text-align: center;
+	line-height: 32px;
+    font-weight: bold;
+    font-size: 1em;
+	text-align: center;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#battleOnlyLabel {
+	display:none;position: absolute;
+	top: 5px;
+	left: 90px;
+	width: 90px;
+	height: 30px;
+	background-color: #808000;
+	float:right;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+	border: none;
+	color: #fff;
+	text-align: center;
+	line-height: 32px;
+    font-weight: bold;
+    font-size: 1em;
+	text-align: center;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
